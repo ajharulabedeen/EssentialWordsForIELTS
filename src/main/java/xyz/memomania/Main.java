@@ -17,23 +17,32 @@ public class Main {
 //        Validate.isTrue(args.length == 1, "usage: supply url to fetch");
         String baseUrl = "https://app.memrise.com/course/421128/essential-words-for-the-ielts-3/";
         print("Fetching %s...", baseUrl);
-        for (int i = 1; i <= 20; i++) {
-            String url = "https://app.memrise.com/course/421128/essential-words-for-the-ielts-3/"+""+"/";
+        for (int i = 1; i <= 30; i++) {
+            String url = "https://app.memrise.com/course/421128/essential-words-for-the-ielts-3/" + i + "/";
             getWords(url);
         }
     }
 
     private static void getWords(String url) throws IOException {
         Document doc = Jsoup.connect(url).get();
-        Elements header = doc.select("div.infos");
-        System.out.println(header.text());
+//        no need the words heards, if words header requied then have to active this line.
+//        Elements header = doc.select("div.infos");
+//        System.out.println(header.text());
+
         Elements words = doc.select("div.thing");
         List<String> list = words.eachText();
         words.eachText().forEach(s -> {
-            System.out.println(s.split(" ")[0]);
+            String[] ss = s.split(" ");
+//            1st print the word,
+//            System.out.print(ss[0] + ", ");
+
+//            2nd meaning of the word.
+            for (int i = 1; i < ss.length; i++) {
+                System.out.print(ss[i] + " ");
+            }
+            System.out.println();
         });
     }
-
 
     private static void print(String msg, Object... args) {
         System.out.println(String.format(msg, args));
